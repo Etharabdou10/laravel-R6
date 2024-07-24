@@ -70,6 +70,8 @@ Route::get('cars/trashed', [CarController::class,'showDeleted'])->name('cars.sho
 
 
 
+
+
 Route::get('class_create', [ClassController::class,'create'])->name('class.create');
 Route::post('class_store', [ClassController::class,'store'])->name('class.store');
 Route::get('classes', [ClassController::class,'index'])->name('classes.index');
