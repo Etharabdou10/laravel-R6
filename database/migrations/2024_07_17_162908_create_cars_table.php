@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+
 return new class extends Migration
 {
     /**
@@ -17,6 +18,7 @@ return new class extends Migration
             $table->text('description');
             $table->float('price');
             $table->boolean('published');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
