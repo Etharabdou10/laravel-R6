@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>All classes</title>
+  <title>All c</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,45 +23,38 @@
   <main>
     <div class="container my-5">
       <div class="bg-light p-5 rounded">
-        <h2 class="fw-bold fs-2 mb-5 pb-2">All Classes</h2>
+        <h2 class="fw-bold fs-2 mb-5 pb-2">All classes Deleted</h2>
         <table class="table table-hover">
           <thead>
             <tr class="table-dark">
-              <th scope="col">Calss Name</th>
+              <th scope="col">class name</th>
               <th scope="col">Price</th>
               <th scope="col">capacity</th>
               <th scope="col">is_fulled</th>
               <th scope="col">timeFrom</th>
               <th scope="col">timeTo</th>
               <th scope="col">Edit</th>
-              <th scope="col">Show</th>
-              <th scope="col">Delete</th>
+              <th scope="col">Permenant Delete</th>
             </tr>
+             
+
           </thead>
           <tbody>
-          
             
             @foreach($class as $c)
             <tr>
             
               <td scope="row">{{$c['class_name']}}</td>
               <td>{{$c['price']}}</td>
-              <td>{{$c['capacity']}}</td>
-              <td>{{$c->is_fulled ? 'Yes' : 'No' }}</td>
+              <td>{{Str::limit($c['capacity'],20)}}</td>
+              <td>{{ $c->is_fulled ? 'Yes' : 'No' }}</td>
               <td>{{$c['timeFrom']}}</td>
               <td>{{$c['timeTo']}}</td>
-              
               <td><a href="{{route('class.edit',$c['id'])}}">Edit</a></td>
-              <td><a href="{{route('class.show',$c['id'])}}">Show</a></td>
-              <td>
-            <form action="{{ route('class.destroy',$c['id']) }}" method="post">
-             @csrf
-             @method('get')
-            <input type="hidden" name="id" value="{{ $c->id }}">
-            <input type="submit" value="Delete">
-            </form>
-            </td>
-
+              <td><a href="#">Delete</a></td>
+              
+              
+              
             </tr>
             @endforeach
             

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Classes;
 use Illuminate\Support\Str;
+use Illuminate\Http\RedirectResponse;
 
 class ClassController extends Controller
 {
@@ -56,7 +57,8 @@ class ClassController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $class = Classes::findOrFail($id);
+        return view('class_details', compact('class'));
     }
 
     /**
@@ -77,7 +79,19 @@ class ClassController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data=[
+            'class_name'=>$request->class_name,
+            'capacity'=>$request->capacity,
+            'price'=>$request->price,
+            'timeFrom'=>$request->timeFrom,
+            'timeTo'=>$request->timeTo,
+            'is_fulled'=>isset($request->is_fulled),
+        
+    
+      ];
+      Classes::where('id',$id)->update($data);
+    //   return "data updated successfully";
+    return redirect()->route('classes.index');
     }
 
     /**
@@ -85,6 +99,22 @@ class ClassController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Classes::where('id',$id)->delete();
+
+        return redirect()->route('classes.index');
     }
+    // public function showDeleted()
+    // {
+    //       $class = Classes::onlyTrashed()->get();
+    //       return view('trashedClass',compact('class'));
+    // }
+
+
+    public function restore(Request $request): RedirectResponse
+         {  
+         $id = $request->id;
+         Classes::where('id', $id)->restore();
+         return redirect('class');
+         }
+
 }

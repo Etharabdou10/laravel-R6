@@ -76,6 +76,11 @@ Route::get('class_create', [ClassController::class,'create'])->name('class.creat
 Route::post('class_store', [ClassController::class,'store'])->name('class.store');
 Route::get('classes', [ClassController::class,'index'])->name('classes.index');
 Route::get('classes/{id}', [ClassController::class,'edit'])->name('class.edit');
+Route::put('classes/{id}', [ClassController::class,'update'])->name('class.update');
+Route::get('classes/{id}/show', [ClassController::class,'show'])->name('class.show');
+Route::get('classes/{id}/delete', [ClassController::class,'destroy'])->name('class.destroy');
+Route::get('classes/trashed', [ClassController::class,'showDeleted'])->name('class.showDeleted');
+
 
 
 
