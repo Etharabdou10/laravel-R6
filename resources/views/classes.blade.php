@@ -36,6 +36,7 @@
               <th scope="col">Edit</th>
               <th scope="col">Show</th>
               <th scope="col">Delete</th>
+              <th scope="col">Force Delete</th>
             </tr>
           </thead>
           <tbody>
@@ -56,11 +57,16 @@
               <td>
             <form action="{{ route('class.destroy',$c['id']) }}" method="post">
              @csrf
-             @method('get')
+             @method('delete')
             <input type="hidden" name="id" value="{{ $c->id }}">
             <input type="submit" value="Delete">
             </form>
             </td>
+            <td><form action="{{route('class.forceDelete',$c['id'])}}" method="post">
+                @csrf 
+                @method('delete')
+                <button type="submit" class="btn btn-link m-0 p-0">Force Delete</button>
+              </form></td>
 
             </tr>
             @endforeach

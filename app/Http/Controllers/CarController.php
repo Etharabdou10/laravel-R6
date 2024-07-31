@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Car;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 
 
@@ -32,15 +34,18 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
+        $data=$request->validate([
+               
+          'carTitle'=>'required|string',
+           'description'=>'required|string|max:1000',
+           'price'=>'required|decimal:0,1',
+           
 
-     $data=[
-           'carTitle'=>$request->carTitle,
-           'description'=>$request->description,
-           'price'=>$request->price,
-           'published'=>isset($request->published),
-           
-           
-     ];
+        ]);
+        $data['published']=isset($request->published);
+        
+        dd($data);
+    
 
         Car::create
         ($data
@@ -110,5 +115,21 @@ class CarController extends Controller
           $cars = Car::onlyTrashed()->get();
           return view('trashedCars',compact('cars'));
     }
+
+    public function restore(string $id)
+         {  
+            Car::where('id',$id)->restore();
+
+            return redirect()->route('cars.showDeleted');
+         }
+
+         public function forceDelete(string $id)
+         {
+             
+            
+             Car::where('id',$id)->forceDelete($id);
+             return redirect()->route('cars.index');
+         }
+
 
 }

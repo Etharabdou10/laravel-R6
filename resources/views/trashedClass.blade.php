@@ -33,7 +33,7 @@
               <th scope="col">is_fulled</th>
               <th scope="col">timeFrom</th>
               <th scope="col">timeTo</th>
-              <th scope="col">Edit</th>
+              <th scope="col">Restore</th>
               <th scope="col">Permenant Delete</th>
             </tr>
              
@@ -50,11 +50,17 @@
               <td>{{ $c->is_fulled ? 'Yes' : 'No' }}</td>
               <td>{{$c['timeFrom']}}</td>
               <td>{{$c['timeTo']}}</td>
-              <td><a href="{{route('class.edit',$c['id'])}}">Edit</a></td>
-              <td><a href="#">Delete</a></td>
-              
-              
-              
+              <td><form action="{{route('class.restore',$c['id'])}}" method="post">
+                @csrf 
+                @method('patch')
+                <button type="submit" class="btn btn-link m-0 p-0">Restore</button>
+              </form></td>
+              <td><form action="{{route('class.forceDelete',$c['id'])}}" method="post">
+                @csrf 
+                @method('delete')
+                <button type="submit" class="btn btn-link m-0 p-0">Delete</button>
+              </form></td>
+            
             </tr>
             @endforeach
             
