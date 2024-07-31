@@ -88,7 +88,6 @@ Route::delete('classes/{id}', [ClassController::class,'forceDelete'])->name('cla
 
 
 
-
 // Route::fallback(function () {
 //         return redirect('/');
 //     });
