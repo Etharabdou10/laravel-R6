@@ -4,6 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\ClassController;
+use App\Http\Controllers\ProductsController;
+use App\Models\Products;
+use phpDocumentor\Reflection\DocBlock\Tags\Example;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -86,8 +90,21 @@ Route::patch('classes/{id}', [ClassController::class,'restore'])->name('class.re
 Route::delete('classes/{id}', [ClassController::class,'forceDelete'])->name('class.forceDelete');
 
 
-
-
+Route::get('uploadForm', [ExampleController::class,'uploadForm']);
+Route::post('upload', [ExampleController::class,'upload'])->name('upload');
 // Route::fallback(function () {
 //         return redirect('/');
 //     });
+
+// Route::get('index', [ExampleController::class,'index']);
+
+
+
+
+
+
+Route::get('products', [ProductsController::class,'index'])->name('products.index');;
+Route::get('products/create', [ProductsController::class,'create'])->name('products.create');
+Route::post('products', [ProductsController::class,'store'])->name('products.store');
+Route::get('products/{id}/show', [ProductsController::class,'show'])->name('products.show');
+

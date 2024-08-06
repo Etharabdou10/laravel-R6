@@ -11,23 +11,20 @@ class ExampleController extends Controller
         return view('task3');
     }
 
-    
-    
-    // function data(){
+    function uploadForm(){
+        return view('upload');
 
-    //     return view('task3');
-    // }
-    
-//     public function store(Request $request, $id) //Adding the query parameter for id passed in Route.
-// {
-//     $location = new Reservation;
-//     $location->name = $request->get('name');
-//     $location->type = $request->get('type');
-//     $location->location()->associate($id);
+    }
+    public function upload(Request $request){
+        $file_extension = $request->image->getClientOriginalExtension();
+        $file_name = time() . '.' . $file_extension;
+        $path = 'assets/images';
+        $request->image->move($path, $file_name);
+        return 'Uploaded';
+    }
+    function index(){
+        return view('index');
 
-//     $location->save();
-
-//     return redirect('/location');
-// }
+    }
 
 }

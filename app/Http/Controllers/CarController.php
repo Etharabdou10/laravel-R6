@@ -7,10 +7,11 @@ use App\Models\Car;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
-
+use App\Traits\Common;
+use Carbon\Traits\Cast;
 
 class CarController extends Controller
-{
+{   use Common;
     /**
      * Display a listing of the resource.
      */
@@ -39,19 +40,17 @@ class CarController extends Controller
           'carTitle'=>'required|string',
            'description'=>'required|string|max:1000',
            'price'=>'required|decimal:0,1',
+           'image'=> 'required|mimes:png,jpg,jpeg|max:2048',
            
-
         ]);
         $data['published']=isset($request->published);
+        $data['image']=$this->uploadFile($request->image,'assets/images');
+
         
-        dd($data);
+        // dd($data);
     
 
-        Car::create
-        ($data
-            
-        
-    );
+        Car::create ($data);
     return redirect()->route('cars.index');
     }
 
@@ -80,16 +79,18 @@ class CarController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // dd($request,$id);
-        //
-        $data=[
-            'carTitle'=>$request->carTitle,
-            'description'=>$request->description,
-            'price'=>$request->price,
-            'published'=>isset($request->published),
-            
-            
-      ];
+        
+    $data=$request->validate([
+               
+        'carTitle'=>'required|string',
+         'description'=>'required|string|max:1000',
+         'price'=>'required|decimal:0,1',
+         'image'=> 'sometime|mimes:png,jpg,jpeg|max:2048',
+         
+
+      ]);
+      $data['published']=isset($request->published);
+      $data['image']=$this->uploadFile($request->image,'assets/images');
       Car::where('id',$id)->update($data);
     //   return "data updated successfully";
     return redirect()->route('cars.index');
