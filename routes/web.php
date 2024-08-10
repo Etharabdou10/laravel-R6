@@ -107,4 +107,7 @@ Route::get('products', [ProductsController::class,'index'])->name('products.inde
 Route::get('products/create', [ProductsController::class,'create'])->name('products.create');
 Route::post('products', [ProductsController::class,'store'])->name('products.store');
 Route::get('products/{id}/show', [ProductsController::class,'show'])->name('products.show');
+Route::get('about', [ProductsController::class,'about']);
+Route::get('products/{id}/edit', [ProductsController::class,'edit'])->name('products.edit');
+Route::put('products/{id}/update', [ProductsController::class,'update'])->name('products.update');
 

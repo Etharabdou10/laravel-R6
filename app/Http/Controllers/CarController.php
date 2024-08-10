@@ -85,12 +85,16 @@ class CarController extends Controller
         'carTitle'=>'required|string',
          'description'=>'required|string|max:1000',
          'price'=>'required|decimal:0,1',
-         'image'=> 'sometime|mimes:png,jpg,jpeg|max:2048',
+         'image'=> 'sometimes|mimes:png,jpg,jpeg|max:2048',
          
 
       ]);
       $data['published']=isset($request->published);
-      $data['image']=$this->uploadFile($request->image,'assets/images');
+
+      if($request->hasFile('image')) {
+
+          $data['image']=$this->uploadFile($request->image,'assets/images');
+      }
       Car::where('id',$id)->update($data);
     //   return "data updated successfully";
     return redirect()->route('cars.index');

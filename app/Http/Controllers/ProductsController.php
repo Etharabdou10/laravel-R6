@@ -17,18 +17,23 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        // $products=Products::get();
-        // return view('products',compact('products'));
-        $products = Products::latest()->take(3)->get();
-        return view('products', compact('products'));
+        $products=Products::get();
+        return view('products',compact('products'));
+        // $products = Products::latest()->take(3)->get();
+        // return view('products', compact('products'));
+    }
+    public function about()
+    {
+        
+        return view('about');
     }
      
-    public function show(string $id)
-    {
-        //
-        $product = Products::findOrFail($id);
-        return view('products', compact('products'));
-    }
+    // public function show(string $id)
+    // {
+    //     //
+    //     $product = Products::findOrFail($id);
+    //     return view('products', compact('product'));
+    // }
     /**
      * Show the form for creating a new resource.
      */
@@ -63,7 +68,8 @@ class ProductsController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $product=Products::findOrFail($id);
+        return view('edit_product',compact('product'));
     }
 
     /**
@@ -71,7 +77,25 @@ class ProductsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data=$request->validate([
+               
+            'title'=>'required|string',
+             'shortDescription'=>'required|string|max:1000',
+             'price'=>'required|decimal:0,1',
+             'image'=> 'sometimes|mimes:png,jpg,jpeg|max:2048',
+             
+    
+          ]);
+          if($request->hasFile('image')) {
+
+            $data['image']=$this->uploadFile($request->image,'assets/images');
+        }
+        Products::where('id',$id)->update($data);
+      //   return "data updated successfully";
+      return redirect()->route('products.index');
+   
+      
+    
     }
 
     /**
