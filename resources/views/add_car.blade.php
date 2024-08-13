@@ -45,6 +45,23 @@
               <div class="alert alert-warning">{{$message}}</div>
               @enderror
             </div>
+            <div class="form-group mb-3 row">
+            <label for="" class="form-label col-md-2 fw-bold text-md-end">Category:</label>
+            <div class="col-md-10">
+              <select name="category_id" id="" class="form-control py-2" >
+                <option value="">Select Category</option>
+               
+
+                @foreach($categories as $category )
+                
+                <option value="{{$category->id}}">{{$category->category_name}}</option>
+                @endforeach
+              </select>
+              @error('category_name')
+                <div class="alert alert-warning">{{$message}}</div>
+              @enderror
+            </div>
+          </div>
           </div>
           <div class="form-group mb-3 row">
             <label for="" class="form-label col-md-2 fw-bold text-md-end">Description:</label>

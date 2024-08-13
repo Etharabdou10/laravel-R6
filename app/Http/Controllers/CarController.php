@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Car;
+use App\Models\Category;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
@@ -18,7 +19,10 @@ class CarController extends Controller
     public function index()
     {
         $cars=Car::get();
-        return view('cars',compact('cars'));
+        $categories=Category::select('id','category_name')->get();
+        return view('cars',compact('cars','categories'));
+       
+
         //
     }
 
@@ -26,8 +30,8 @@ class CarController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-    {
-        return view('add_car');
+    {   $categories=Category::select('id','category_name')->get();
+        return view('add_car',compact('categories'));
     }
 
     /**
@@ -41,6 +45,7 @@ class CarController extends Controller
            'description'=>'required|string|max:1000',
            'price'=>'required|decimal:0,1',
            'image'=> 'required|mimes:png,jpg,jpeg|max:2048',
+           'category_id' => 'required|exists:categories,id',
            
         ]);
         $data['published']=isset($request->published);
@@ -69,8 +74,10 @@ class CarController extends Controller
      */
     public function edit(string $id)
     {
+
         $car=Car::findOrFail($id);
-        return view('edit_car',compact('car'));
+        $categories=Category::select('id','category_name')->get();
+        return view('edit_car',compact('car','categories'));
         //
     }
 
@@ -86,6 +93,7 @@ class CarController extends Controller
          'description'=>'required|string|max:1000',
          'price'=>'required|decimal:0,1',
          'image'=> 'sometimes|mimes:png,jpg,jpeg|max:2048',
+         'category_id' => 'required|exists:categories,id',
          
 
       ]);
@@ -97,7 +105,9 @@ class CarController extends Controller
       }
       Car::where('id',$id)->update($data);
     //   return "data updated successfully";
-    return redirect()->route('cars.index');
+    
+    $categories=Category::select('id','category_name')->get();
+    return redirect()->route('cars.index',compact('categories'));
  
     }
 
