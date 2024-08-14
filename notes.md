@@ -1,0 +1,3 @@
+//put patch delete form m4 link
+// Must have exactly two decimal places (9.99)...
+'price' => 'decimal:2'

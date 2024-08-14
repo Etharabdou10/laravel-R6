@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Car;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class ExampleController extends Controller
@@ -11,23 +13,26 @@ class ExampleController extends Controller
         return view('task3');
     }
 
-    
-    
-    // function data(){
+    function uploadForm(){
+        return view('upload');
 
-    //     return view('task3');
-    // }
-    
-//     public function store(Request $request, $id) //Adding the query parameter for id passed in Route.
-// {
-//     $location = new Reservation;
-//     $location->name = $request->get('name');
-//     $location->type = $request->get('type');
-//     $location->location()->associate($id);
+    }
+    public function upload(Request $request){
+        $file_extension = $request->image->getClientOriginalExtension();
+        $file_name = time() . '.' . $file_extension;
+        $path = 'assets/images';
+        $request->image->move($path, $file_name);
+        return 'Uploaded';
+    }
+    function index(){
+        return view('index');
 
-//     $location->save();
+    }
+    function test(){
+    //    dd(Student::find(1)->phone->phone_number);
 
-//     return redirect('/location');
-// }
+    //    dd(Student::find(3)?->phone);
+       dd(Car::find(7)?->category);
 
+    }
 }

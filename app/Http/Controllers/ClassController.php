@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Classes;
 use Illuminate\Support\Str;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 
 class ClassController extends Controller
 {
@@ -31,24 +33,28 @@ class ClassController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $data=[
-            'class_name'=>$request->class_name,
-            'capacity'=>$request->capacity,
-            'price'=>$request->price,
-            'timeFrom'=>$request->timeFrom,
-            'timeTo'=>$request->timeTo,
-            'is_fulled'=>isset($request->is_fulled),
+        $data=$request->validate([
+               
+            'class_name'=>'required|string',
+            'capacity'=>'required|string|max:50',
+            'price'=>'required|decimal:0,1',
+            'timeFrom'=>'required|date_format:H:i',
+            'timeTo'=>'required|date_format:H:i|after:timeFrom',
+             
   
-      ];
+          ]);
+          $data['is_fulled']=isset($request->is_fulled);
+          
+          dd($data);
+      
 
       Classes::create
       ($data
       
   
   );
-      return "data added successfully";
-  }
+  return redirect()->route('classes.index');
+}
     
 
     /**
@@ -56,7 +62,8 @@ class ClassController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $class = Classes::findOrFail($id);
+        return view('class_details', compact('class'));
     }
 
     /**
@@ -68,7 +75,7 @@ class ClassController extends Controller
         return view('edit_class',compact('class'));
         //
     
-        // return "hi";
+        
     
     }
 
@@ -77,7 +84,19 @@ class ClassController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data=[
+            'class_name'=>$request->class_name,
+            'capacity'=>$request->capacity,
+            'price'=>$request->price,
+            'timeFrom'=>$request->timeFrom,
+            'timeTo'=>$request->timeTo,
+            'is_fulled'=>isset($request->is_fulled),
+        
+    
+      ];
+      Classes::where('id',$id)->update($data);
+    //   return "data updated successfully";
+    return redirect()->route('classes.index');
     }
 
     /**
@@ -85,6 +104,41 @@ class ClassController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Classes::where('id',$id)->delete();
+
+        return redirect()->route('classes.index');
     }
+    public function showDeleted()
+    {
+          $class = Classes::onlyTrashed()->get();
+          return view('trashedClass',compact('class'));
+    }
+
+
+    // public function restore(Request $request): RedirectResponse
+    //      {  
+    //      $id = $request->id;
+    //      Classes::where('id', $id)->restore();
+    //      return redirect('class');
+    //      }
+
+    public function restore(string $id)
+    {  
+       Classes::where('id',$id)->restore();
+
+       return redirect()->route('class.showDeleted');
+    }
+
+    public function forceDelete(string $id)
+    {
+        
+       
+        Classes::where('id',$id)->forceDelete($id);
+        return redirect()->route('classes.index');
+    }
+
+
+
+
+
 }

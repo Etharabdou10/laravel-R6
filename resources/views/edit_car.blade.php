@@ -24,32 +24,79 @@
     <div class="container my-5">
       <div class="bg-light p-5 rounded">
         <h2 class="fw-bold fs-2 mb-5 pb-2">Edit Car</h2>
-        <form action="{{route('cars.update',$car->id)}}" method="POST" class="px-md-5">
+        <form action="{{route('cars.update',$car->id)}}" method="POST" class="px-md-5" enctype="multipart/form-data">
           @csrf
           @method('put')
           <div class="form-group mb-3 row">
             <label for="" class="form-label col-md-2 fw-bold text-md-end">Car Title:</label>
             <div class="col-md-10">
-              <input type="text" placeholder="BMW" class="form-control py-2" name="carTitle" value="{{$car->carTitle}}" />
+              <input type="text" placeholder="BMW" class="form-control py-2" name="carTitle" value="{{old('carTitle',$car->carTitle)}}" />
+              @error('carTitle')
+              <div class="alert alert-warning">{{$message}}</div>
+              @enderror
             </div>
           </div>
           <div class="form-group mb-3 row">
             <label for="" class="form-label col-md-2 fw-bold text-md-end">Price:</label>
             <div class="col-md-10">
-              <input type="number" step="0.1" placeholder="Enter price" class="form-control py-2" name="price" value="{{$car->price}}" />
+              <input type="number" step="0.1" placeholder="Enter price" class="form-control py-2" name="price" value="{{old('price',$car->price)}}" />
+              @error('price')
+              <div class="alert alert-warning">{{$message}}</div>
+              @enderror
             </div>
           </div>
+
+          <div class="form-group mb-3 row">
+            <label for="" class="form-label col-md-2 fw-bold text-md-end">Category:</label>
+            <div class="col-md-10">
+              <select name="category_id" id="" class="form-control py-2" >
+                
+              
+
+              @foreach ($categories as $category)
+        <option value="{{ $category->id }}" @selected(old('category_id') == $category->id || (isset($car->category_id) && $car->category_id == $category->id))>{{ $category->category_name }}</option>
+             @endforeach
+
+
+                </select>
+                @error('category_name')
+                <div class="alert alert-warning">{{$message}}</div>
+              @enderror
+               
+
+
+
+            </div>
+          </div>
+          </div>
+
+
           <div class="form-group mb-3 row">
             <label for="" class="form-label col-md-2 fw-bold text-md-end">Description:</label>
             <div class="col-md-10">
-              <textarea name="description" id="" cols="30" rows="5" class="form-control py-2">{{$car->description}}</textarea>
+              <textarea name="description" id="" cols="30" rows="5" class="form-control py-2">{{old('description',$car->description)}}</textarea>
+              @error('description')
+              <div class="alert alert-warning">{{$message}}</div>
+              @enderror
             </div>
+
           </div>
+          <div class="form-group mb-3 row">
+            <label for="" class="form-label col-md-2 fw-bold text-md-end">Image:</label>
+            <div class="col-md-10">
+              <input type="file" id="image" class="form-control" name="image"  >
+              @error('image')
+              <div class="alert alert-warning">{{$message}}</div>
+              @enderror
+
+                <img src="{{asset('assets/images/' .$car->image ) }}" alt="{{$car['carTitle']}}"   style="max-width:150px"/>
+            </div>
+
           <hr>
           <div class="form-group mb-3 row">
             <label for="" class="form-label col-md-2 fw-bold text-md-end">Published:</label>
             <div class="col-md-10">
-              <input type="checkbox" class="form-check-input" style="padding: 0.7rem;" name="published" @checked($car->published) />
+              <input type="checkbox" class="form-check-input" style="padding: 0.7rem;" name="published"  @checked(old('published',$car->published)) />
             </div>
           </div>
           <div class="text-md-end">
