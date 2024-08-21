@@ -49,7 +49,7 @@
               <td>{{ $car->published ? 'Yes' : 'No' }}</td>
               
               
-              <td >{{$car->category_id}}</td>
+              <td >{{$car->category->category_name}}</td>
               
              
               <td><a href="{{route('cars.edit',$car['id'])}}">Edit</a></td>
