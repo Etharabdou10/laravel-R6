@@ -59,7 +59,12 @@ Route::get('welcome', function () {
 })->name('w');
 
 
-Route::get('cars', [CarController::class,'index'])->name('cars.index');
+
+// Route::prefix('cars')->group(function(){
+
+// })->middleware('verified');
+
+Route::get('cars', [CarController::class,'index'])->name('cars.index')->middleware('verified');
 Route::get('cars/create', [CarController::class,'create'])->name('cars.create');
 Route::post('cars', [CarController::class,'store'])->name('cars.store');
 Route::get('cars/{id}/edit', [CarController::class,'edit'])->name('cars.edit');
@@ -117,3 +122,7 @@ Route::put('products/{id}/update', [ProductsController::class,'update'])->name('
 Route::get('testRel', [ExampleController::class,'test']);
 
 
+
+Auth::routes(['verify'=>true]);
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -52,6 +52,17 @@
                 </p>
               </div>
               <div class="text-md-end">
+              <div class="mb-4">
+                <p class="card-text">
+                  <span class="fw-bold">Published:</span> {{ $car->published ? 'Yes' : 'No' }}
+                </p>
+              </div>
+              <div class="mb-4">
+                <p class="card-text">
+                  <span class="fw-bold">category:</span><br>{{$car->category->category_name}}
+                </p>
+              </div>
+              <div class="text-md-end">
               
                 <a href="{{route('cars.index')}}" class="btn mt-4 btn-primary text-white fs-5 fw-bold border-0 py-2 px-md-5">
                   Back to All cars
