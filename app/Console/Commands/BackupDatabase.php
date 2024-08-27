@@ -34,7 +34,7 @@ class BackupDatabase extends Command
         $port = env('DB_PORT', '3306');
 
         $date = now()->format('Y-m-d_H-i-s');
-        $backupFile = "storage/app/backup/{$databaseName}_{$date}.sql";
+        $backupFile = "app/backups/{$databaseName}_{$date}.sql";
 
         $command = "mysqldump --user={$username} --password={$password} --host={$host} --port={$port} {$databaseName} > " . storage_path($backupFile);
     
