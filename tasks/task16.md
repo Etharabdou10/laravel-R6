@@ -609,7 +609,7 @@ public function middleware()
 Conclusion
 Preventing job overlaps can be crucial for ensuring data consistency and avoiding duplicated work. You can achieve this by using unique identifiers, leveraging Laravel's WithoutOverlapping middleware, implementing database-based locking, or using custom rate-limiting logic. Select the approach that best fits your application's needs and infrastructure.
 
-<h1>conclusion</h1>
+<h1>conclusion</h1> 
 1. Define the Job Class:
 
 Create a new class that implements the Illuminate\Contracts\Queue\ShouldQueue interface.
