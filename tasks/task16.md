@@ -1,4 +1,4 @@
-Laravel Queues: A Comprehensive Guide
+<h1>Laravel Queues: A Comprehensive Guide</h1>
 Laravel queues provide a robust and flexible mechanism for deferring time-consuming tasks, such as sending emails, processing background jobs, or executing tasks asynchronously. This allows your web applications to respond more quickly to user requests, improving overall performance and user experience.
 
 Key Concepts:
