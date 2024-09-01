@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExampleController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\ClassController;
+use App\Http\Controllers\SocialController;
 use App\Http\Controllers\ProductsController;
 use App\Models\Products;
 use phpDocumentor\Reflection\DocBlock\Tags\Example;
@@ -146,3 +147,7 @@ Route::get('testRel', [ExampleController::class,'test']);
 Auth::routes(['verify'=>true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::get('auth/github/redirect', [SocialController::class, 'redirect'])->name('socialLogin');
+Route::get('auth/github/callback', [SocialController::class, 'callback']);
